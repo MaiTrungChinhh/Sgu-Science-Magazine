@@ -1,4 +1,4 @@
-config.inc.php
-cache/
-uploads/
-public/
+# config.inc.php
+# cache/
+# uploads/
+# public/
