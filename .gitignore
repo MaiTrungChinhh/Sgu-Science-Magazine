@@ -2,4 +2,4 @@ config.inc.php
 cache/
 uploads/
 public/
-.vscoder/
+.vscode/
