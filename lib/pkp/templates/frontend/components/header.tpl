@@ -11,7 +11,7 @@
  *       represents a page-level override, and doesn't indicate whether or not
  *       sidebars have been configured for thesite.
  *}
-{strip}
+ {strip}
 	{* Determine whether a logo or title string is being displayed *}
 	{assign var="showingLogo" value=true}
 	{if !$displayPageHeaderLogo}
@@ -72,18 +72,19 @@
 					<a id="siteNav"></a>
 					<div class="pkp_navigation_primary_row">
 						<div class="pkp_navigation_primary_wrapper">
-							{* Primary navigation menu for current application *}
-							{$primaryMenu}
-
 							{* Search form *}
 							{if $currentContext && $requestedPage !== 'search'}
 								<div class="pkp_navigation_search_wrapper">
 									<a href="{url page="search"}" class="pkp_search pkp_search_desktop">
 										<span class="fa fa-search" aria-hidden="true"></span>
-										{translate key="common.search"}
+										{* {translate key="common.search"} *}
 									</a>
 								</div>
 							{/if}
+							{* Primary navigation menu for current application *}
+							{$primaryMenu}
+
+						
 						</div>
 					</div>
 					<div class="pkp_navigation_user_wrapper" id="navigationUserWrapper">
