@@ -18,17 +18,142 @@
 
 .pkp_footer_content {
 	padding: @triple;
+	padding-top: 0;
 	text-align: left;
 }
 
 // OJS brand images in footer
-.pkp_brand_footer {
-	.pkp_helpers_clear();
-	padding: @triple;
+// .pkp_brand_footer {
+// 	.pkp_helpers_clear();
+// 	padding: @triple;
 
-	a {
-		float: right;
-		display: block;
-		max-width: 150px;
+// 	a {
+// 		float: right;
+// 		display: block;
+// 		max-width: 150px;
+// 	}
+// }
+
+// Biến LESS để dễ dàng điều chỉnh
+@column-gap: 20px;
+@border-radius: 8px;
+@heading-margin-bottom: 10px;
+@paragraph-margin-bottom: 10px;
+@font-size-default: 1rem;
+@line-height-default: 1.6;
+
+// Container
+.elementor-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: @column-gap; // Sử dụng biến để điều chỉnh khoảng cách giữa các cột
+}
+
+// Row of columns
+.elementor-row {
+	display: flex;
+	width: 100%;
+}
+
+// Column styling
+.elementor-column {
+	box-sizing: border-box;
+	padding: 10px; // Thêm padding vào bên trong các cột
+}
+
+// Column 1 styling
+.elementor-element-4b1a73c {
+	border-radius: @border-radius; // Sử dụng biến để bo góc
+}
+
+// Column 2 styling
+.elementor-element-c358d62 {
+	border-radius: @border-radius; // Sử dụng biến để bo góc
+}
+
+// Text editor styling
+.elementor-text-editor {
+	margin: 0; // Xóa margin mặc định
+	line-height: @line-height-default; // Sử dụng biến cho line-height
+}
+
+// Heading styling
+.elementor-text-editor h5 {
+	font-size: @font-size-default; // Sử dụng biến cho font-size
+	margin: 0 0 @heading-margin-bottom; // Sử dụng biến cho margin dưới heading
+}
+
+// Paragraph styling
+.elementor-text-editor p {
+	margin: 0 0 @paragraph-margin-bottom; // Sử dụng biến cho margin dưới paragraphs
+}
+
+// Font-size adjustment for specific spans
+.elementor-text-editor span {
+	font-size: @font-size-default; // Sử dụng biến cho font-size
+}
+
+// Bold text styling
+.elementor-text-editor strong {
+	font-weight: bold;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+	.elementor-column {
+		flex: 1 1 100%; // Xếp chồng các cột theo chiều dọc trên màn hình nhỏ hơn
 	}
+}
+
+////////
+// Các thuộc tính chung cho footer
+@footer-background: #333; // Màu nền của footer
+@footer-text-color: #fff; // Màu chữ của footer
+@footer-padding: 10px 0; // Padding cho footer
+
+// Các thuộc tính cho copyright
+@copyright-font-size: 0.875rem; // Kích thước chữ cho bản quyền
+@copyright-margin: 0; // Margin cho bản quyền
+
+// Định nghĩa phong cách cho footer
+.absolute-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: @footer-background;
+	color: @footer-text-color;
+	padding: @footer-padding;
+
+	// Flexbox để căn giữa nội dung
+	display: flex;
+	justify-content: center; // Căn giữa nội dung theo chiều ngang
+	align-items: center; // Căn giữa nội dung theo chiều dọc
+
+	.footer-primary {
+		// Căn giữa nội dung của footer-primary
+		display: flex;
+		align-items: center;
+		justify-content: center; // Căn giữa nội dung của footer-primary
+		width: 100%; // Đảm bảo chiều rộng của footer-primary bằng chiều rộng của .absolute-footer
+	}
+
+	.copyright-footer {
+		font-size: @copyright-font-size;
+		margin: @copyright-margin; // Margin cho bản quyền
+	}
+}
+
+// Đảm bảo các lớp khác không can thiệp vào căn giữa
+.dark {
+	background-color: @footer-background;
+	color: @footer-text-color;
+}
+
+.medium-text-center {
+	text-align: center; // Căn giữa văn bản
+}
+
+.text-center {
+	text-align: center; // Căn giữa văn bản
 }

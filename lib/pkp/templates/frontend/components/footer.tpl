@@ -29,20 +29,18 @@
 	<a id="pkp_content_footer"></a>
 
 	<div class="pkp_structure_footer">
-
 		{if $pageFooter}
 			<div class="pkp_footer_content">
 				{$pageFooter}
 			</div>
 		{/if}
-
-		<div class="pkp_brand_footer" role="complementary">
-			<a href="{url page="about" op="aboutThisPublishingSystem"}">
-				<img alt="{translate key="about.aboutThisPublishingSystem"}" src="{$baseUrl}/{$brandImage}">
-			</a>
-		</div>
 	</div>
 </div><!-- pkp_structure_footer_wrapper -->
+<div class="absolute-footer dark medium-text-center text-center">
+	<div class="footer-primary pull-left">
+		<div class="copyright-footer">Copyright 2024 © <strong>Trung Chinh </strong></div>
+	</div>
+</div>
 
 </div><!-- pkp_structure_page -->
 
