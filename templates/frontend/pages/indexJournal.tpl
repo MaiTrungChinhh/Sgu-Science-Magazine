@@ -28,6 +28,46 @@
 		</div>
 	{/if}
 
+	<div class="slideshow-container">
+		<div class="slide">
+		  <img src="/sgu/image/journals/1/homepageImage_vi_VN.png" alt="Slide 1">
+		  <div class="slide-caption">
+			<span>Caption for Slide 1</span>
+			<a href="#">Learn More</a>
+		  </div>
+		</div>
+	  
+		<div class="slide">
+		  <img src="/sgu/image/journals/1/hinh-tap-chi.png" alt="Slide 2">
+		  <div class="slide-caption">
+			<span>Caption for Slide 2</span>
+			<a href="#">Learn More</a>
+		  </div>
+		</div>
+	  
+		<div class="slide">
+		  <img src="https://gratisography.com/wp-content/uploads/2024/01/gratisography-reindeer-dog-1170x780.jpg" alt="Slide 3">
+		  <div class="slide-caption">
+			<span>Caption for Slide 3</span>
+			<a href="#">Learn More</a>
+		  </div>
+		</div>
+	  
+		<!-- Dots -->
+		<div class="dots">
+		  <span class="dot" onclick="currentSlide(0)"></span>
+		  <span class="dot" onclick="currentSlide(1)"></span>
+		  <span class="dot" onclick="currentSlide(2)"></span>
+		</div>
+	  	<div>
+			<!-- Previous and Next buttons -->
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+	  	</div>
+	</div>
+	<link rel="stylesheet" href="/sgu/templates/frontend/pages/slideshow/slideshow.css">
+	<script src="/sgu/templates/frontend/pages/slideshow/slideshow.js"></script>
+
 	{* Journal Description *}
 	{if $activeTheme->getOption('showDescriptionInJournalIndex')}
 		<section class="homepage_about">
