@@ -88,6 +88,7 @@
 }
 
 .pkp_navigation_primary_wrapper {
+	margin-left: 0;
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -105,7 +106,7 @@
 	.pkp_nav_list {
 		padding-left: 0;
 		margin-left: 0;
-		width: 700px;
+		width: auto;
 	}
 
 	ul {
@@ -403,38 +404,18 @@
 
 	// User-focused navigation menu
 	.pkp_navigation_user_wrapper {
-		width: 700px;
 		position: absolute;
-		left: 30%;
-		top: 55px;
-		transform: none;
-		z-index: -1;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		padding-left: @base;
+		padding-right: @base;
+		text-align: right;
+		padding-top: 0;
+		margin-top: 0;
+		border-top: none;
+		z-index: 1000;
 	}
-
-	.pkp_navigation_user_wrapper a[href="http://localhost/Sgu-Science-Magazine/index.php/sm/user/register"],
-	.pkp_navigation_user_wrapper a[href="http://localhost/Sgu-Science-Magazine/index.php/sm/login"] {
-		color: white;
-		text-decoration: none;
-		background-color: #1E6292;
-		border: 2px solid #e5e5e5;
-		border-radius: 20px;
-		text-align: center;
-		padding: 0 1em;
-		font-size: 0.8em;
-		height: 2.5em;
-		transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-
-		&:hover {
-			color: #446084;
-			text-decoration: none;
-			background-color: #e5e5e5;
-			border: 2px solid #e5e5e5;
-			border-radius: 20px;
-			text-align: center;
-		}
-	}
-
-
 
 	.pkp_navigation_user {
 		text-align: right;
@@ -522,4 +503,48 @@
 			}
 		}
 	}
+
+	@media (min-width: 992px) {
+		.test {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+		}
+
+		.pkp_navigation_primary_row {
+			display: flex;
+			align-items: center;
+		}
+
+		.pkp_nav_list {
+			padding-left: 0;
+			margin-left: 0;
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+		}
+
+		.pkp_nav_list a {
+			display: inline-block;
+			white-space: nowrap;
+		}
+
+		.pkp_nav_list {
+			padding-left: 0;
+			margin-left: 0;
+			width: auto;
+			/* Đặt chiều rộng tự động để ôm trọn nội dung con */
+			display: flex;
+			/* Sử dụng Flexbox để sắp xếp các phần tử con theo hàng */
+			flex-wrap: nowrap;
+			/* Đảm bảo các phần tử con không bị xuống hàng */
+			box-sizing: border-box;
+			/* Đảm bảo padding và border được tính vào chiều rộng tổng cộng */
+			align-items: center;
+		}
+
+	}
+
+
 }

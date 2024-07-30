@@ -71,8 +71,8 @@
 				<nav class="pkp_site_nav_menu" aria-label="{translate|escape key="common.navigation.site"}">
 					<a id="siteNav"></a>
 					<div class="pkp_navigation_primary_row">
-						<div class="pkp_navigation_primary_wrapper">
-							{* Search form *}
+						
+						{* Search form *}
 							{if $currentContext && $requestedPage !== 'search'}
 								<div class="pkp_navigation_search_wrapper">
 									<a href="{url page="search"}" class="pkp_search pkp_search_desktop">
@@ -81,14 +81,13 @@
 									</a>
 								</div>
 							{/if}
-							{* Primary navigation menu for current application *}
-							{$primaryMenu}
-
-						
+						<div class="test">
+							<div class="pkp_navigation_primary_wrapper">
+								{* Primary navigation menu for current application *}
+								{$primaryMenu}
+							</div>
+							{load_menu name="user" id="navigationUser" ulClass="pkp_navigation_user" liClass="profile"}
 						</div>
-					</div>
-					<div class="pkp_navigation_user_wrapper" id="navigationUserWrapper">
-						{load_menu name="user" id="navigationUser" ulClass="pkp_navigation_user" liClass="profile"}
 					</div>
 				</nav>
 			</div><!-- .pkp_head_wrapper -->
