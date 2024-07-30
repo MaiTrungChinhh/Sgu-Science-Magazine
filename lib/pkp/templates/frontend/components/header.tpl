@@ -71,7 +71,6 @@
 				<nav class="pkp_site_nav_menu" aria-label="{translate|escape key="common.navigation.site"}">
 					<a id="siteNav"></a>
 					<div class="pkp_navigation_primary_row">
-						
 						{* Search form *}
 							{if $currentContext && $requestedPage !== 'search'}
 								<div class="pkp_navigation_search_wrapper">
