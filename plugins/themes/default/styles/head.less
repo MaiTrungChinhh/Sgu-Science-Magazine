@@ -177,6 +177,8 @@
 			background: @text;
 		}
 	}
+
+
 }
 
 .pkp_navigation_search_wrapper {
@@ -408,6 +410,31 @@
 		transform: none;
 		z-index: -1;
 	}
+
+	.pkp_navigation_user_wrapper a[href="http://localhost/Sgu-Science-Magazine/index.php/sm/user/register"],
+	.pkp_navigation_user_wrapper a[href="http://localhost/Sgu-Science-Magazine/index.php/sm/login"] {
+		color: white;
+		text-decoration: none;
+		background-color: #1E6292;
+		border: 2px solid #e5e5e5;
+		border-radius: 20px;
+		text-align: center;
+		padding: 0 1em;
+		font-size: 0.8em;
+		height: 2.5em;
+		transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+
+		&:hover {
+			color: #446084;
+			text-decoration: none;
+			background-color: #e5e5e5;
+			border: 2px solid #e5e5e5;
+			border-radius: 20px;
+			text-align: center;
+		}
+	}
+
+
 
 	.pkp_navigation_user {
 		text-align: right;
