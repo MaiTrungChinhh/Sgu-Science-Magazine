@@ -99,3 +99,4 @@
 		<div class="pkp_structure_content{if $hasSidebar} has_sidebar{/if}">
 			<div class="pkp_structure_main" role="main">
 				<a id="pkp_content_main"></a>
+				<script src="\Sgu-Science-Magazine\lib\pkp\templates\frontend\components\header.js"></script>
