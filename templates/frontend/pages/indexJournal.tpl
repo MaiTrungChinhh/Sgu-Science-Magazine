@@ -24,49 +24,51 @@
 
 	{if !$activeTheme->getOption('useHomepageImageAsHeader') && $homepageImage}
 		<div class="homepage_image">
-			<img src="{$publicFilesDir}/{$homepageImage.uploadName|escape:"url"}"{if $homepageImage.altText} alt="{$homepageImage.altText|escape}"{/if}>
+			<img src="{$publicFilesDir}/{$homepageImage.uploadName|escape:"url"}" {if $homepageImage.altText}
+				alt="{$homepageImage.altText|escape}" {/if}>
 		</div>
 	{/if}
 
 	<div class="slideshow-container">
 		<div class="slide">
-		  <img src="/sgu/image/journals/1/homepageImage_vi_VN.png" alt="Slide 1">
-		  <div class="slide-caption">
-			<span>Caption for Slide 1</span>
-			<a href="#">Learn More</a>
-		  </div>
+			<img src="/Sgu-Science-Magazine/image/journals/1/homepageImage_vi_VN.png" alt="Slide 1">
+			<div class="slide-caption">
+				<span>Caption for Slide 1</span>
+				<a href="#">Learn More</a>
+			</div>
 		</div>
-	  
+
 		<div class="slide">
-		  <img src="/sgu/image/journals/1/hinh-tap-chi.png" alt="Slide 2">
-		  <div class="slide-caption">
-			<span>Caption for Slide 2</span>
-			<a href="#">Learn More</a>
-		  </div>
+			<img src="/Sgu-Science-Magazine/image/journals/1/hinh-tap-chi.png" alt="Slide 2">
+			<div class="slide-caption">
+				<span>Caption for Slide 2</span>
+				<a href="#">Learn More</a>
+			</div>
 		</div>
-	  
+
 		<div class="slide">
-		  <img src="https://gratisography.com/wp-content/uploads/2024/01/gratisography-reindeer-dog-1170x780.jpg" alt="Slide 3">
-		  <div class="slide-caption">
-			<span>Caption for Slide 3</span>
-			<a href="#">Learn More</a>
-		  </div>
+			<img src="https://gratisography.com/wp-content/uploads/2024/01/gratisography-reindeer-dog-1170x780.jpg"
+				alt="Slide 3">
+			<div class="slide-caption">
+				<span>Caption for Slide 3</span>
+				<a href="#">Learn More</a>
+			</div>
 		</div>
-	  
+
 		<!-- Dots -->
 		<div class="dots">
-		  <span class="dot" onclick="currentSlide(0)"></span>
-		  <span class="dot" onclick="currentSlide(1)"></span>
-		  <span class="dot" onclick="currentSlide(2)"></span>
+			<span class="dot" onclick="currentSlide(0)"></span>
+			<span class="dot" onclick="currentSlide(1)"></span>
+			<span class="dot" onclick="currentSlide(2)"></span>
 		</div>
-	  	<div>
+		<div>
 			<!-- Previous and Next buttons -->
 			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 			<a class="next" onclick="plusSlides(1)">&#10095;</a>
-	  	</div>
+		</div>
 	</div>
-	<link rel="stylesheet" href="/sgu/templates/frontend/pages/slideshow/slideshow.css">
-	<script src="/sgu/templates/frontend/pages/slideshow/slideshow.js"></script>
+	<link rel="stylesheet" href="/Sgu-Science-Magazine/templates/frontend/pages/slideshow/slideshow.css">
+	<script src="/Sgu-Science-Magazine/templates/frontend/pages/slideshow/slideshow.js"></script>
 
 	{* Journal Description *}
 	{if $activeTheme->getOption('showDescriptionInJournalIndex')}
@@ -91,19 +93,20 @@
 				{if $smarty.foreach.announcements.iteration == 1}
 					{include file="frontend/objects/announcement_summary.tpl" heading="h3"}
 					<div class="more">
-				{else}
-					<article class="obj_announcement_summary">
-						<h4>
-							<a href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
-								{$announcement->getLocalizedTitle()|escape}
-							</a>
-						</h4>
-						<div class="date">
-							{$announcement->getDatePosted()|date_format:$dateFormatShort}
-						</div>
-					</article>
-				{/if}
-			{/foreach}
+					{else}
+						<article class="obj_announcement_summary">
+							<h4>
+								<a
+									href="{url router=$smarty.const.ROUTE_PAGE page="announcement" op="view" path=$announcement->getId()}">
+									{$announcement->getLocalizedTitle()|escape}
+								</a>
+							</h4>
+							<div class="date">
+								{$announcement->getDatePosted()|date_format:$dateFormatShort}
+							</div>
+						</article>
+					{/if}
+				{/foreach}
 			</div><!-- .more -->
 		</section>
 	{/if}
