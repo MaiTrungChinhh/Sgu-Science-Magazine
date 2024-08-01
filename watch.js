@@ -14,7 +14,7 @@ const watcher = chokidar.watch(pathsToWatch, {
 
 const compileLess = () => {
   exec(
-    'lessc styles/index.less public/journals/1/styleSheet.css',
+    'lessc styles/index.less public/journals/2/styleSheet.css',
     (err, stdout, stderr) => {
       if (err) {
         console.error(`Error: ${stderr}`);
