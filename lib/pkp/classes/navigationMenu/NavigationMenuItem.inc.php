@@ -18,6 +18,7 @@
 define('NMI_TYPE_ABOUT',	'NMI_TYPE_ABOUT');
 define('NMI_TYPE_SUBMISSIONS',	'NMI_TYPE_SUBMISSIONS');
 define('NMI_TYPE_EDITORIAL_TEAM',	'NMI_TYPE_EDITORIAL_TEAM');
+define('NMI_TYPE_EDITORIAL_BOARD',	'NMI_TYPE_EDITORIAL_BOARD');
 define('NMI_TYPE_CONTACT',	'NMI_TYPE_CONTACT');
 define('NMI_TYPE_ANNOUNCEMENTS',	'NMI_TYPE_ANNOUNCEMENTS');
 define('NMI_TYPE_CUSTOM',	'NMI_TYPE_CUSTOM');
@@ -249,5 +250,3 @@ class NavigationMenuItem extends DataObject {
 		$this->setData('remoteUrl', $url, $locale);
 	}
 }
-
-

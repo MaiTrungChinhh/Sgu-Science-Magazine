@@ -107,6 +107,11 @@
 						</article>
 					{/if}
 				{/foreach}
+				<a href="{url router=$smarty.const.ROUTE_PAGE page="announcement"}" class="archived-notifications">
+					<span aria-hidden="true" role="presentation">
+						{translate key="common.oldAnnouncement"}
+					</span>
+				</a>
 			</div><!-- .more -->
 		</section>
 	{/if}

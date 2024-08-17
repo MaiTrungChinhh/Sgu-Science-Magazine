@@ -19,6 +19,7 @@
 switch ($op) {
 	case 'index':
 	case 'editorialTeam':
+	case 'editorialBoard':
 	case 'submissions':
 	case 'contact':
 		define('HANDLER_CLASS', 'AboutContextHandler');
@@ -30,5 +31,3 @@ switch ($op) {
 		import('lib.pkp.pages.about.AboutSiteHandler');
 		break;
 }
-
-

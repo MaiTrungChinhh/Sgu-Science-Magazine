@@ -681,6 +681,9 @@ msgstr "Trả lời:"
 msgid "common.readMore"
 msgstr "Đọc thêm"
 
+msgid "common.oldAnnouncement"
+msgstr "Các thông báo trước"
+
 msgid "common.readMoreWithTitle"
 msgstr "Đọc thêm về {$title}"
 

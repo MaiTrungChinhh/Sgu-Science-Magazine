@@ -80,7 +80,7 @@
 									</a>
 								</div>
 							{/if}
-						<div class="test">
+						<div class="menu">
 							<div class="pkp_navigation_primary_wrapper">
 								{* Primary navigation menu for current application *}
 								{$primaryMenu}

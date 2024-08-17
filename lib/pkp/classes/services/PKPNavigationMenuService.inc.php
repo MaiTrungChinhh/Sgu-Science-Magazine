@@ -44,6 +44,11 @@ class PKPNavigationMenuService {
 				'description' => __('manager.navigationMenus.editorialTeam.description'),
 				'conditionalWarning' => __('manager.navigationMenus.editorialTeam.conditionalWarning'),
 			),
+			NMI_TYPE_EDITORIAL_BOARD => array(
+				'title' => __('about.editorialBoard'),
+				'description' => __('manager.navigationMenus.editor ialBoard.description'),
+				'conditionalWarning' => __('manager.navigationMenus.editorialBoard.conditionalWarning'),
+			),
 			NMI_TYPE_SUBMISSIONS => array(
 				'title' => __('about.submissions'),
 				'description' => __('manager.navigationMenus.submissions.description'),
@@ -151,6 +156,9 @@ class PKPNavigationMenuService {
 			case NMI_TYPE_EDITORIAL_TEAM:
 				$navigationMenuItem->setIsDisplayed($context && $context->getLocalizedData('editorialTeam'));
 				break;
+			case NMI_TYPE_EDITORIAL_BOARD:
+				$navigationMenuItem->setIsDisplayed($context && $context->getLocalizedData('editorialBOARD'));
+				break;
 			case NMI_TYPE_CONTACT:
 				$navigationMenuItem->setIsDisplayed($context && ($context->getData('mailingAddress') || $context->getData('contactName')));
 				break;
@@ -236,6 +244,16 @@ class PKPNavigationMenuService {
 						null
 					));
 					break;
+					case NMI_TYPE_EDITORIAL_BOARD:
+						$navigationMenuItem->setUrl($dispatcher->url(
+							$request,
+							ROUTE_PAGE,
+							null,
+							'about',
+							'editorialBoard',
+							null
+						));
+						break;
 				case NMI_TYPE_CONTACT:
 					$navigationMenuItem->setUrl($dispatcher->url(
 						$request,

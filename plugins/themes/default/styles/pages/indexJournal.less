@@ -57,7 +57,7 @@
 			&:extend(.pkp_screen_reader all);
 		}
 
-		> .obj_announcement_summary {
+		>.obj_announcement_summary {
 			position: relative;
 			padding: @triple @base;
 		}
@@ -76,7 +76,7 @@
 
 		@media(min-width: @screen-phone) {
 
-			> .obj_announcement_summary,
+			>.obj_announcement_summary,
 			.more .obj_announcement_summary {
 				padding-left: @double;
 				padding-right: @double;
@@ -85,7 +85,7 @@
 
 		@media(min-width: @screen-tablet) {
 
-			> .obj_announcement_summary {
+			>.obj_announcement_summary {
 				float: left;
 				width: 65%;
 
@@ -122,7 +122,7 @@
 
 		@media(min-width: @screen-desktop) {
 
-			> .obj_announcement_summary,
+			>.obj_announcement_summary,
 			.more .obj_announcement_summary {
 				padding-left: @triple;
 				padding-right: @triple;
@@ -164,19 +164,55 @@
 			padding-right: @triple;
 		}
 
-		> p:first-child {
+		>p:first-child {
 			margin-top: 0;
 		}
 
-		> p:last-child {
+		>p:last-child {
 			margin-bottom: 0;
 		}
 	}
 
 	@media(min-width: @screen-tablet) {
 
-		.cmp_announcements + .additional_content {
+		.cmp_announcements+.additional_content {
 			border-top: none;
 		}
 	}
+
+	.archived-notifications {
+		display: flex;
+		justify-content: flex-end;
+		position: relative;
+		padding-right: @triple; // Khoảng cách bên phải để tạo không gian cho mũi tên
+		font-size: @font-sml; // Kích thước chữ
+		font-weight: @bold; // Độ đậm của chữ
+		line-height: @triple; // Chiều cao dòng, thường bằng padding hoặc font-size để căn chỉnh chính xác
+		color: @primary; // Màu văn bản
+		text-decoration: none; // Loại bỏ gạch chân
+
+		&::after {
+			font: normal normal normal 14px/1 FontAwesome; // Định dạng font cho mũi tên từ FontAwesome
+			font-size: inherit; // Kích thước font kế thừa từ phần tử cha
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased; // Làm mượt font trên trình duyệt WebKit
+			-moz-osx-font-smoothing: grayscale; // Làm mượt font trên trình duyệt Mozilla trên macOS
+			transform: translate(0, 0); // Không thay đổi vị trí của mũi tên
+			content: "\f054"; // Mã Unicode cho mũi tên từ FontAwesome
+			position: absolute; // Định vị mũi tên tuyệt đối trong phần tử chứa
+			top: 2px; // Khoảng cách từ trên của phần tử chứa
+			right: 0; // Khoảng cách từ bên phải của phần tử chứa
+			width: @triple; // Chiều rộng của mũi tên
+			height: @triple; // Chiều cao của mũi tên
+			line-height: @triple; // Chiều cao dòng của mũi tên
+			text-align: center; // Căn giữa mũi tên theo chiều ngang
+		}
+
+		&:hover,
+		&:focus {
+			color: @primary-lift; // Màu văn bản khi hover hoặc focus
+		}
+	}
+
+
 }

@@ -1641,6 +1641,9 @@ msgstr "Lịch sử Tạp chí"
 msgid "about.editorialTeam"
 msgstr "Ban biên tập"
 
+msgid "about.editorialBoard"
+msgstr "Hội đồng biên tập"
+
 msgid "about.editorialTeam.biography"
 msgstr "Tiểu sử"
 

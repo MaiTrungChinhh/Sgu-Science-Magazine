@@ -15,11 +15,13 @@
 
 import('classes.handler.Handler');
 
-class AboutContextHandler extends Handler {
+class AboutContextHandler extends Handler
+{
 	/**
 	 * Constructor
 	 */
-	function __construct() {
+	function __construct()
+	{
 		parent::__construct();
 		AppLocale::requireComponents([LOCALE_COMPONENT_APP_COMMON, LOCALE_COMPONENT_PKP_MANAGER, LOCALE_COMPONENT_APP_MANAGER]);
 	}
@@ -27,7 +29,8 @@ class AboutContextHandler extends Handler {
 	/**
 	 * @see PKPHandler::authorize()
 	 */
-	function authorize($request, &$args, $roleAssignments) {
+	function authorize($request, &$args, $roleAssignments)
+	{
 		$context = $request->getContext();
 		if (!$context || !$context->getData('restrictSiteAccess')) {
 			$templateMgr = TemplateManager::getManager($request);
@@ -44,7 +47,8 @@ class AboutContextHandler extends Handler {
 	 * @param $args array
 	 * @param $request PKPRequest
 	 */
-	function index($args, $request) {
+	function index($args, $request)
+	{
 		$templateMgr = TemplateManager::getManager($request);
 		$this->setupTemplate($request);
 		$templateMgr->display('frontend/pages/about.tpl');
@@ -55,18 +59,28 @@ class AboutContextHandler extends Handler {
 	 * @param $args array
 	 * @param $request PKPRequest
 	 */
-	function editorialTeam($args, $request) {
+	function editorialTeam($args, $request)
+	{
 		$templateMgr = TemplateManager::getManager($request);
 		$this->setupTemplate($request);
 		$templateMgr->display('frontend/pages/editorialTeam.tpl');
 	}
+
+	function editorialBoard($args, $request)
+	{
+		$templateMgr = TemplateManager::getManager($request);
+		$this->setupTemplate($request);
+		$templateMgr->display('frontend/pages/editorialBoard.tpl');
+	}
+
 
 	/**
 	 * Display submissions page.
 	 * @param $args array
 	 * @param $request PKPRequest
 	 */
-	function submissions($args, $request) {
+	function submissions($args, $request)
+	{
 		$templateMgr = TemplateManager::getManager($request);
 		$this->setupTemplate($request);
 
@@ -77,7 +91,7 @@ class AboutContextHandler extends Handler {
 			reset($checklist);
 		}
 
-		$templateMgr->assign( 'submissionChecklist', $context->getLocalizedData('submissionChecklist') );
+		$templateMgr->assign('submissionChecklist', $context->getLocalizedData('submissionChecklist'));
 
 		// Get sections for this context
 		$canSubmitAll = false;
@@ -104,7 +118,8 @@ class AboutContextHandler extends Handler {
 	 * @param $args array
 	 * @param $request PKPRequest
 	 */
-	function contact($args, $request) {
+	function contact($args, $request)
+	{
 		$templateMgr = TemplateManager::getManager($request);
 		$this->setupTemplate($request);
 		$context = $request->getContext();
@@ -122,5 +137,3 @@ class AboutContextHandler extends Handler {
 		$templateMgr->display('frontend/pages/contact.tpl');
 	}
 }
-
-

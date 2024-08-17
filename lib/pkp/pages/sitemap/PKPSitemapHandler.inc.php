@@ -17,14 +17,16 @@ import('classes.handler.Handler');
 
 define('SITEMAP_XSD_URL', 'https://www.sitemaps.org/schemas/sitemap/0.9');
 
-class PKPSitemapHandler extends Handler {
+class PKPSitemapHandler extends Handler
+{
 	/**
 	 * Generate an XML sitemap for webcrawlers
 	 * Creates a sitemap index if in site context, else creates a sitemap
 	 * @param $args array
 	 * @param $request Request
 	 */
-	function index($args, $request) {
+	function index($args, $request)
+	{
 		$context = $request->getContext();
 		if (!$context) {
 			$doc = $this->_createSitemapIndex($request);
@@ -46,7 +48,8 @@ class PKPSitemapHandler extends Handler {
 	 * @param $request Request
 	 * @return DOMDocument
 	 */
-	function _createSitemapIndex($request) {
+	function _createSitemapIndex($request)
+	{
 		$contextDao = Application::getContextDAO();
 
 		$doc = new DOMDocument('1.0', 'utf-8');
@@ -65,12 +68,13 @@ class PKPSitemapHandler extends Handler {
 		return $doc;
 	}
 
-	 /**
+	/**
 	 * Construct the sitemap
 	 * @param $request Request
 	 * @return DOMDocument
 	 */
-	function _createContextSitemap($request) {
+	function _createContextSitemap($request)
+	{
 		$context = $request->getContext();
 
 		$doc = new DOMDocument('1.0', 'utf-8');
@@ -104,6 +108,9 @@ class PKPSitemapHandler extends Handler {
 		if (!empty($context->getData('editorialTeam'))) {
 			$root->appendChild($this->_createUrlTree($doc, $request->url($context->getPath(), 'about', 'editorialTeam')));
 		}
+		if (!empty($context->getData('editorialBoard'))) {
+			$root->appendChild($this->_createUrlTree($doc, $request->url($context->getPath(), 'about', 'editorialBoard')));
+		}
 		// About: contact
 		if (!empty($context->getData('mailingAddress')) || !empty($context->getData('contactName'))) {
 			$root->appendChild($this->_createUrlTree($doc, $request->url($context->getPath(), 'about', 'contact')));
@@ -129,7 +136,8 @@ class PKPSitemapHandler extends Handler {
 	 * @param $priority string Subjective priority assessment of page (optional)
 	 * @return DOMNode
 	 */
-	protected function _createUrlTree($doc, $loc, $lastmod = null, $changefreq = null, $priority = null) {
+	protected function _createUrlTree($doc, $loc, $lastmod = null, $changefreq = null, $priority = null)
+	{
 		$url = $doc->createElement('url');
 		$url->appendChild($doc->createElement('loc', htmlspecialchars($loc, ENT_COMPAT, 'UTF-8')));
 		if ($lastmod) {
@@ -143,7 +151,4 @@ class PKPSitemapHandler extends Handler {
 		}
 		return $url;
 	}
-
 }
-
-
