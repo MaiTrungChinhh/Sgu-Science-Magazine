@@ -17,13 +17,15 @@ namespace PKP\Services;
 import('lib.pkp.classes.navigationMenu.NavigationMenuItemAssignment');
 import('lib.pkp.classes.navigationMenu.NavigationMenuItem');
 
-class PKPNavigationMenuService {
+class PKPNavigationMenuService
+{
 
 	/**
 	 * Return all default navigationMenuItemTypes.
 	 * @return array
 	 */
-	public function getMenuItemTypes() {
+	public function getMenuItemTypes()
+	{
 		\AppLocale::requireComponents(LOCALE_COMPONENT_APP_COMMON, LOCALE_COMPONENT_PKP_USER);
 		$types = array(
 			NMI_TYPE_CUSTOM => array(
@@ -46,8 +48,13 @@ class PKPNavigationMenuService {
 			),
 			NMI_TYPE_EDITORIAL_BOARD => array(
 				'title' => __('about.editorialBoard'),
-				'description' => __('manager.navigationMenus.editor ialBoard.description'),
+				'description' => __('manager.navigationMenus.editorialBoard.description'),
 				'conditionalWarning' => __('manager.navigationMenus.editorialBoard.conditionalWarning'),
+			),
+			NMI_TYPE_EDITORIAL_BOARD_EDIT => array(
+				'title' => __('about.editorialBoardEdit'),
+				'description' => __('manager.navigationMenus.editorialBoardEdit.description'),
+				'conditionalWarning' => __('manager.navigationMenus.editorialBoardEdit.conditionalWarning'),
 			),
 			NMI_TYPE_SUBMISSIONS => array(
 				'title' => __('about.submissions'),
@@ -113,7 +120,8 @@ class PKPNavigationMenuService {
 	 * Return all custom edit navigationMenuItemTypes Templates.
 	 * @return array
 	 */
-	public function getMenuItemCustomEditTemplates() {
+	public function getMenuItemCustomEditTemplates()
+	{
 		$templates = array(
 			NMI_TYPE_CUSTOM => array(
 				'template' => 'core:controllers/grid/navigationMenus/customNMIType.tpl',
@@ -131,7 +139,8 @@ class PKPNavigationMenuService {
 	/**
 	 * Callback for display menu item functionallity
 	 */
-	function getDisplayStatus(&$navigationMenuItem, &$navigationMenu) {
+	function getDisplayStatus(&$navigationMenuItem, &$navigationMenu)
+	{
 		$request = \Application::get()->getRequest();
 		$dispatcher = $request->getDispatcher();
 		$templateMgr = \TemplateManager::getManager($request);
@@ -158,6 +167,9 @@ class PKPNavigationMenuService {
 				break;
 			case NMI_TYPE_EDITORIAL_BOARD:
 				$navigationMenuItem->setIsDisplayed($context && $context->getLocalizedData('editorialBOARD'));
+				break;
+			case NMI_TYPE_EDITORIAL_BOARD_EDIT:
+				$navigationMenuItem->setIsDisplayed($context && $context->getLocalizedData('editorialBoardEdit'));
 				break;
 			case NMI_TYPE_CONTACT:
 				$navigationMenuItem->setIsDisplayed($context && ($context->getData('mailingAddress') || $context->getData('contactName')));
@@ -244,16 +256,26 @@ class PKPNavigationMenuService {
 						null
 					));
 					break;
-					case NMI_TYPE_EDITORIAL_BOARD:
-						$navigationMenuItem->setUrl($dispatcher->url(
-							$request,
-							ROUTE_PAGE,
-							null,
-							'about',
-							'editorialBoard',
-							null
-						));
-						break;
+				case NMI_TYPE_EDITORIAL_BOARD:
+					$navigationMenuItem->setUrl($dispatcher->url(
+						$request,
+						ROUTE_PAGE,
+						null,
+						'about',
+						'editorialBoard',
+						null
+					));
+					break;
+				case NMI_TYPE_EDITORIAL_BOARD_EDIT:
+					$navigationMenuItem->setUrl($dispatcher->url(
+						$request,
+						ROUTE_PAGE,
+						null,
+						'about',
+						'editorialBoardEdit',
+						null
+					));
+					break;
 				case NMI_TYPE_CONTACT:
 					$navigationMenuItem->setUrl($dispatcher->url(
 						$request,
@@ -382,16 +404,17 @@ class PKPNavigationMenuService {
 		$templateMgr->assign('navigationMenuItem', $navigationMenuItem);
 	}
 
-	public function loadMenuTree(&$navigationMenu) {
+	public function loadMenuTree(&$navigationMenu)
+	{
 		$navigationMenuItemDao = \DAORegistry::getDAO('NavigationMenuItemDAO');
 		$items = $navigationMenuItemDao->getByMenuId($navigationMenu->getId())->toArray();
 
 		$navigationMenuItemAssignmentDao = \DAORegistry::getDAO('NavigationMenuItemAssignmentDAO');
 		$assignments = $navigationMenuItemAssignmentDao->getByMenuId($navigationMenu->getId())
-				->toArray();
+			->toArray();
 
 		foreach ($assignments as $assignment) {
-			foreach($items as $item) {
+			foreach ($items as $item) {
 				if ($item->getId() === $assignment->getMenuItemId()) {
 					$assignment->setMenuItem($item);
 					break;
@@ -434,7 +457,8 @@ class PKPNavigationMenuService {
 	 * @param $navigationMenu \NavigationMenu
 	 *
 	 */
-	public function getMenuTree(&$navigationMenu) {
+	public function getMenuTree(&$navigationMenu)
+	{
 		$navigationMenuDao = \DAORegistry::getDAO('NavigationMenuDAO');
 		$cache = $navigationMenuDao->getCache($navigationMenu->getId());
 		if ($cache->cache) {
@@ -447,11 +471,12 @@ class PKPNavigationMenuService {
 		$this->loadMenuTreeDisplayState($navigationMenu);
 	}
 
-	private function loadMenuTreeDisplayState(&$navigationMenu) {
+	private function loadMenuTreeDisplayState(&$navigationMenu)
+	{
 		foreach ($navigationMenu->menuTree as $assignment) {
 			$nmi = $assignment->getMenuItem();
 			if ($assignment->children) {
-				foreach($assignment->children as $childAssignment) {
+				foreach ($assignment->children as $childAssignment) {
 					$childNmi = $childAssignment->getMenuItem();
 					$this->getDisplayStatus($childNmi, $navigationMenu);
 
@@ -471,7 +496,8 @@ class PKPNavigationMenuService {
 	 * @param mixed $array
 	 * @return mixed
 	 */
-	function arrayToObject($class, $array) {
+	function arrayToObject($class, $array)
+	{
 		if ($class == 'NavigationMenu') {
 			$obj = new \NavigationMenu();
 		} else if ($class == 'NavigationMenuItem') {
@@ -479,19 +505,19 @@ class PKPNavigationMenuService {
 		} else if ($class == 'NavigationMenuItemAssignment') {
 			$obj = new \NavigationMenuItemAssignment();
 		}
-		foreach($array as $k => $v) {
-			if(strlen($k)) {
-				if(is_array($v) && $k == 'menuTree') {
+		foreach ($array as $k => $v) {
+			if (strlen($k)) {
+				if (is_array($v) && $k == 'menuTree') {
 					$treeChildren = array();
-					foreach($v as $treeChild) {
+					foreach ($v as $treeChild) {
 						array_push($treeChildren, $this->arrayToObject('NavigationMenuItemAssignment', $treeChild));
 					}
 					$obj->{$k} = $treeChildren;
-				} else if(is_array($v) && $k == 'navigationMenuItem') {
+				} else if (is_array($v) && $k == 'navigationMenuItem') {
 					$obj->{$k} = $this->arrayToObject('NavigationMenuItem', $v); //RECURSION
-				} else if(is_array($v) && $k == 'children') {
+				} else if (is_array($v) && $k == 'children') {
 					$treeChildren = array();
-					foreach($v as $treeChild) {
+					foreach ($v as $treeChild) {
 						array_push($treeChildren, $this->arrayToObject('NavigationMenuItemAssignment', $treeChild));
 					}
 					$obj->{$k} = $treeChildren;
@@ -516,7 +542,8 @@ class PKPNavigationMenuService {
 	 * @param $templateMgr \TemplateManager
 	 * @param $navigationMenu \NavigationMenu
 	 */
-	public function transformNavMenuItemTitle($templateMgr, &$navigationMenuItem) {
+	public function transformNavMenuItemTitle($templateMgr, &$navigationMenuItem)
+	{
 		$this->setNMITitleLocalized($navigationMenuItem);
 
 		$title = $navigationMenuItem->getLocalizedTitle();
@@ -526,7 +553,7 @@ class PKPNavigationMenuService {
 		$prefixPos = strpos($title, $prefix);
 		$postfixPos = strpos($title, $postfix);
 
-		if ($prefixPos !== false && $postfixPos !== false && ($postfixPos - $prefixPos) > 0){
+		if ($prefixPos !== false && $postfixPos !== false && ($postfixPos - $prefixPos) > 0) {
 			$titleRepl = substr($title, $prefixPos + strlen($prefix), $postfixPos - $prefixPos - strlen($prefix));
 
 			$templateReplaceTitle = $templateMgr->getTemplateVars($titleRepl);
@@ -540,7 +567,8 @@ class PKPNavigationMenuService {
 	 * Populate the navigationMenuItem and the children properties of the NMIAssignment object
 	 * @param $nmiAssignment \NavigationMenuItemAssignment The NMIAssignment object passed by reference
 	 */
-	public function populateNMIAssignmentContainedObjects(&$nmiAssignment) {
+	public function populateNMIAssignmentContainedObjects(&$nmiAssignment)
+	{
 		// Set NMI
 		$navigationMenuItemDao = \DAORegistry::getDAO('NavigationMenuItemDAO');
 		$nmiAssignment->setMenuItem($navigationMenuItemDao->getById($nmiAssignment->getMenuItemId()));
@@ -564,14 +592,15 @@ class PKPNavigationMenuService {
 	 * @param $isDisplayed boolean optional. If true the function checks if the found NMI of type $nmiType is displayed.
 	 * @return boolean Returns true if a NMI of type $nmiType has been found as child of the given $navigationMenuItem.
 	 */
-	private function _hasNMTreeNMIAssignmentWithChildOfNMIType($navigationMenu, $navigationMenuItem, $nmiType, $isDisplayed = true) {
-		foreach($navigationMenu->menuTree as $nmiAssignment) {
-				$nmi = $nmiAssignment->getMenuItem();
-			if(isset($nmi) && $nmi->getId() == $navigationMenuItem->getId()) {
-				foreach($nmiAssignment->children as $childNmiAssignment){
+	private function _hasNMTreeNMIAssignmentWithChildOfNMIType($navigationMenu, $navigationMenuItem, $nmiType, $isDisplayed = true)
+	{
+		foreach ($navigationMenu->menuTree as $nmiAssignment) {
+			$nmi = $nmiAssignment->getMenuItem();
+			if (isset($nmi) && $nmi->getId() == $navigationMenuItem->getId()) {
+				foreach ($nmiAssignment->children as $childNmiAssignment) {
 					$childNmi = $childNmiAssignment->getMenuItem();
 					if (isset($nmi) && $childNmi->getType() == $nmiType) {
-						if($isDisplayed) {
+						if ($isDisplayed) {
 							return $childNmi->getIsDisplayed();
 						} else {
 							return true;
@@ -588,7 +617,8 @@ class PKPNavigationMenuService {
 	 * Sets the title of a navigation menu item, depending on its title or locale-key
 	 * @param $nmi \NavigationMenuItem The NMI to set its title
 	 */
-	public function setNMITitleLocalized($nmi) {
+	public function setNMITitleLocalized($nmi)
+	{
 		if ($nmi) {
 			\AppLocale::requireComponents(LOCALE_COMPONENT_PKP_COMMON, LOCALE_COMPONENT_PKP_MANAGER, LOCALE_COMPONENT_APP_COMMON, LOCALE_COMPONENT_PKP_USER);
 			if ($localisedTitle = $nmi->getLocalizedTitle()) {
@@ -605,7 +635,8 @@ class PKPNavigationMenuService {
 	 * Sets the title of a navigation menu item, depending on its title or locale-key
 	 * @param $nmi \NavigationMenuItem The NMI to set its title
 	 */
-	public function setAllNMILocalisedTitles($nmi) {
+	public function setAllNMILocalisedTitles($nmi)
+	{
 		if ($nmi) {
 			$supportedFormLocales = \AppLocale::getSupportedFormLocales();
 
@@ -634,7 +665,8 @@ class PKPNavigationMenuService {
 	 * @param mixed $args
 	 * @return boolean true if the callback has handled the request.
 	 */
-	public function _callbackHandleCustomNavigationMenuItems($hookName, $args) {
+	public function _callbackHandleCustomNavigationMenuItems($hookName, $args)
+	{
 		$request = \Application::get()->getRequest();
 
 		$page =& $args[0];
@@ -642,14 +674,16 @@ class PKPNavigationMenuService {
 
 		// Construct a path to look for
 		$path = $page;
-		if ($op !== 'index') $path .= "/$op";
-		if ($arguments = $request->getRequestedArgs()) $path .= '/' . implode('/', $arguments);
+		if ($op !== 'index')
+			$path .= "/$op";
+		if ($arguments = $request->getRequestedArgs())
+			$path .= '/' . implode('/', $arguments);
 
 		// Look for a static page with the given path
 		$navigationMenuItemDao = \DAORegistry::getDAO('NavigationMenuItemDAO');
 
 		$context = $request->getContext();
-		$contextId = $context?$context->getId():CONTEXT_ID_NONE;
+		$contextId = $context ? $context->getId() : CONTEXT_ID_NONE;
 		$customNMI = $navigationMenuItemDao->getByPath($contextId, $path);
 
 		// Check if a custom NMI with the requested path existes

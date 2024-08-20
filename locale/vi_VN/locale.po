@@ -1644,6 +1644,9 @@ msgstr "Ban biên tập"
 msgid "about.editorialBoard"
 msgstr "Hội đồng biên tập"
 
+msgid "about.editorialBoardEdit"
+msgstr "Chỉnh sửa hội đồng biên tập"
+
 msgid "about.editorialTeam.biography"
 msgstr "Tiểu sử"
 

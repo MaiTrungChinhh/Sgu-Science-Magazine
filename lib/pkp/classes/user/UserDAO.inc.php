@@ -25,13 +25,15 @@ define('USER_FIELD_INTERESTS', 'interests');
 define('USER_FIELD_AFFILIATION', 'affiliation');
 define('USER_FIELD_NONE', null);
 
-class UserDAO extends DAO {
+class UserDAO extends DAO
+{
 
 	/**
 	 * Construct a new User object.
 	 * @return User
 	 */
-	function newDataObject() {
+	function newDataObject()
+	{
 		return new User();
 	}
 
@@ -41,14 +43,15 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getById($userId, $allowDisabled = true) {
+	function getById($userId, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT * FROM users WHERE user_id = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE user_id = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[(int) $userId]
 		);
 
 		$row = (array) $result->current();
-		return $row?$this->_returnUserFromRowWithData($row):null;
+		return $row ? $this->_returnUserFromRowWithData($row) : null;
 	}
 
 	/**
@@ -57,14 +60,15 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getByUsername($username, $allowDisabled = true) {
+	function getByUsername($username, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT * FROM users WHERE username = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE username = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[$username]
 		);
 
 		$row = (array) $result->current();
-		return $row?$this->_returnUserFromRowWithData($row):null;
+		return $row ? $this->_returnUserFromRowWithData($row) : null;
 	}
 
 	/**
@@ -74,13 +78,14 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getBySetting($settingName, $settingValue, $allowDisabled = true) {
+	function getBySetting($settingName, $settingValue, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT u.* FROM users u JOIN user_settings us ON (u.user_id = us.user_id) WHERE us.setting_name = ? AND us.setting_value = ?' . ($allowDisabled?'':' AND u.disabled = 0'),
+			'SELECT u.* FROM users u JOIN user_settings us ON (u.user_id = us.user_id) WHERE us.setting_name = ? AND us.setting_value = ?' . ($allowDisabled ? '' : ' AND u.disabled = 0'),
 			[$settingName, $settingValue]
 		);
 		$row = $result->current();
-		return $row?$this->_returnUserFromRowWithData((array) $row):null;
+		return $row ? $this->_returnUserFromRowWithData((array) $row) : null;
 	}
 
 	/**
@@ -89,13 +94,14 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getUserByAuthStr($authstr, $allowDisabled = true) {
+	function getUserByAuthStr($authstr, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT * FROM users WHERE auth_str = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE auth_str = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[$authstr]
 		);
 		$row = $result->current();
-		return $row?$this->_returnUserFromRowWithData((array) $row):null;
+		return $row ? $this->_returnUserFromRowWithData((array) $row) : null;
 	}
 
 	/**
@@ -104,13 +110,14 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getUserByEmail($email, $allowDisabled = true) {
+	function getUserByEmail($email, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT * FROM users WHERE email = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE email = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[$email]
 		);
 		$row = $result->current();
-		return $row?$this->_returnUserFromRowWithData((array) $row):null;
+		return $row ? $this->_returnUserFromRowWithData((array) $row) : null;
 	}
 
 	/**
@@ -120,13 +127,14 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return User?
 	 */
-	function getUserByCredentials($username, $password, $allowDisabled = true) {
+	function getUserByCredentials($username, $password, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT * FROM users WHERE username = ? AND password = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE username = ? AND password = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[$username, $password]
 		);
 		$row = $result->current();
-		return $row?$this->_returnUserFromRowWithData((array) $row):null;
+		return $row ? $this->_returnUserFromRowWithData((array) $row) : null;
 	}
 
 	/**
@@ -136,8 +144,10 @@ class UserDAO extends DAO {
 	 * @param $round int
 	 * @return DAOResultFactory containing matching Users
 	 */
-	function getReviewersForSubmission($contextId, $submissionId, $round) {
-		return new DAOResultFactory($result,
+	function getReviewersForSubmission($contextId, $submissionId, $round)
+	{
+		return new DAOResultFactory(
+			$result,
 			$this->retrieve(
 				'SELECT	u.* ,
 				' . $this->getFetchColumns() . '
@@ -159,7 +169,8 @@ class UserDAO extends DAO {
 				]),
 				$params
 			),
-			$this, '_returnUserFromRowWithData'
+			$this,
+			'_returnUserFromRowWithData'
 		);
 
 	}
@@ -172,15 +183,16 @@ class UserDAO extends DAO {
 	 * @param $name string
 	 * @return array matching Users
 	 */
-	function getReviewersNotAssignedToSubmission($contextId, $submissionId, &$reviewRound, $name = '') {
+	function getReviewersNotAssignedToSubmission($contextId, $submissionId, &$reviewRound, $name = '')
+	{
 		$params = array_merge(
 			[(int) $contextId, ROLE_ID_REVIEWER, (int) $reviewRound->getStageId()],
 			$this->getFetchParameters(),
 			[(int) $submissionId, (int) $reviewRound->getId()]
 		);
 		if (!empty($name)) {
-			$nameSearchJoins = 'LEFT JOIN user_settings usgs ON (u.user_id = usgs.user_id AND usgs.setting_name = \'' . IDENTITY_SETTING_GIVENNAME .'\')
-				LEFT JOIN user_settings usfs ON (u.user_id = usfs.user_id AND usfs.setting_name = \'' . IDENTITY_SETTING_FAMILYNAME .'\')';
+			$nameSearchJoins = 'LEFT JOIN user_settings usgs ON (u.user_id = usgs.user_id AND usgs.setting_name = \'' . IDENTITY_SETTING_GIVENNAME . '\')
+				LEFT JOIN user_settings usfs ON (u.user_id = usfs.user_id AND usfs.setting_name = \'' . IDENTITY_SETTING_FAMILYNAME . '\')';
 			$params[] = $params[] = $params[] = $params[] = "%$name%";
 		}
 
@@ -191,13 +203,13 @@ class UserDAO extends DAO {
 			JOIN user_user_groups uug ON (uug.user_id = u.user_id)
 			JOIN user_groups ug ON (ug.user_group_id = uug.user_group_id AND ug.context_id = ? AND ug.role_id = ?)
 			JOIN user_group_stage ugs ON (ugs.user_group_id = ug.user_group_id AND ugs.stage_id = ?)' .
-			(!empty($name) ? $nameSearchJoins : '') .'
+			(!empty($name) ? $nameSearchJoins : '') . '
 			' . $this->getFetchJoins() . '
 			WHERE 0=(SELECT COUNT(r.reviewer_id)
 				FROM review_assignments r
 				WHERE r.submission_id = ? AND r.reviewer_id = u.user_id AND r.review_round_id = ?)' .
-			(!empty($name) ?' AND (usgs.setting_value LIKE ? OR usfs.setting_value LIKE ? OR username LIKE ? OR email LIKE ?)' : '') .'
-			' .$this->getOrderBy(),
+			(!empty($name) ? ' AND (usgs.setting_value LIKE ? OR usfs.setting_value LIKE ? OR username LIKE ? OR email LIKE ?)' : '') . '
+			' . $this->getOrderBy(),
 			$params
 		);
 		return new DAOResultFactory($result, $this, '_returnUserFromRowWithData');
@@ -205,11 +217,12 @@ class UserDAO extends DAO {
 
 	/**
 
-	 * Return a user object from a DB row, including dependent data and reviewer stats.
-	 * @param $row array
-	 * @return User
-	 */
-	function _returnUserFromRowWithReviewerStats($row) {
+													 * Return a user object from a DB row, including dependent data and reviewer stats.
+													 * @param $row array
+													 * @return User
+													 */
+	function _returnUserFromRowWithReviewerStats($row)
+	{
 		$user = $this->_returnUserFromRowWithData($row, false);
 		$user->setData('lastAssigned', $row['last_assigned']);
 		$user->setData('incompleteCount', (int) $row['incomplete_count']);
@@ -234,11 +247,13 @@ class UserDAO extends DAO {
 	 * @param $callHook boolean
 	 * @return User
 	 */
-	function _returnUserFromRowWithData($row, $callHook = true) {
+	function _returnUserFromRowWithData($row, $callHook = true)
+	{
 		$user = $this->_returnUserFromRow($row, false);
 		$this->getDataObjectSettings('user_settings', 'user_id', $row['user_id'], $user);
 
-		if (isset($row['review_id'])) $user->review_id = $row['review_id'];
+		if (isset($row['review_id']))
+			$user->review_id = $row['review_id'];
 		HookRegistry::call('UserDAO::_returnUserFromRowWithData', array(&$user, &$row));
 
 		return $user;
@@ -250,7 +265,8 @@ class UserDAO extends DAO {
 	 * @param $callHook boolean
 	 * @return User
 	 */
-	function _returnUserFromRow($row, $callHook = true) {
+	function _returnUserFromRow($row, $callHook = true)
+	{
 		$user = $this->newDataObject();
 		$user->setId($row['user_id']);
 		$user->setUsername($row['username']);
@@ -274,7 +290,8 @@ class UserDAO extends DAO {
 		$user->setInlineHelp($row['inline_help']);
 		$user->setGossip($row['gossip']);
 
-		if ($callHook) HookRegistry::call('UserDAO::_returnUserFromRow', array(&$user, &$row));
+		if ($callHook)
+			HookRegistry::call('UserDAO::_returnUserFromRow', array(&$user, &$row));
 
 		return $user;
 	}
@@ -283,7 +300,8 @@ class UserDAO extends DAO {
 	 * Insert a new user.
 	 * @param $user User
 	 */
-	function insertObject($user) {
+	function insertObject($user)
+	{
 		if ($user->getDateRegistered() == null) {
 			$user->setDateRegistered(Core::getCurrentDate());
 		}
@@ -295,7 +313,11 @@ class UserDAO extends DAO {
 				(username, password, email, url, phone, mailing_address, billing_address, country, locales, date_last_email, date_registered, date_validated, date_last_login, must_change_password, disabled, disabled_reason, auth_id, auth_str, inline_help, gossip)
 				VALUES
 				(?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, %s, %s, ?, ?, ?, ?, ?, ?, ?)',
-				$this->datetimeToDB($user->getDateLastEmail()), $this->datetimeToDB($user->getDateRegistered()), $this->datetimeToDB($user->getDateValidated()), $this->datetimeToDB($user->getDateLastLogin())),
+				$this->datetimeToDB($user->getDateLastEmail()),
+				$this->datetimeToDB($user->getDateRegistered()),
+				$this->datetimeToDB($user->getDateValidated()),
+				$this->datetimeToDB($user->getDateLastLogin())
+			),
 			[
 				$user->getUsername(),
 				$user->getPassword(),
@@ -309,7 +331,7 @@ class UserDAO extends DAO {
 				$user->getMustChangePassword() ? 1 : 0,
 				$user->getDisabled() ? 1 : 0,
 				$user->getDisabledReason(),
-				$user->getAuthId()=='' ? null : (int) $user->getAuthId(),
+				$user->getAuthId() == '' ? null : (int) $user->getAuthId(),
 				$user->getAuthStr(),
 				(int) $user->getInlineHelp(),
 				$user->getGossip(),
@@ -324,15 +346,23 @@ class UserDAO extends DAO {
 	/**
 	 * @copydoc DAO::getLocaleFieldNames
 	 */
-	function getLocaleFieldNames() {
-		return ['biography', 'signature', 'affiliation',
-			IDENTITY_SETTING_GIVENNAME, IDENTITY_SETTING_FAMILYNAME, 'preferredPublicName'];
+	function getLocaleFieldNames()
+	{
+		return [
+			'biography',
+			'signature',
+			'affiliation',
+			IDENTITY_SETTING_GIVENNAME,
+			IDENTITY_SETTING_FAMILYNAME,
+			'preferredPublicName'
+		];
 	}
 
 	/**
 	 * @copydoc DAO::getAdditionalFieldNames()
 	 */
-	function getAdditionalFieldNames() {
+	function getAdditionalFieldNames()
+	{
 		return array_merge(parent::getAdditionalFieldNames(), [
 			'orcid',
 			'apiKey',
@@ -343,7 +373,8 @@ class UserDAO extends DAO {
 	/**
 	 * @copydoc DAO::updateLocaleFields
 	 */
-	function updateLocaleFields($user) {
+	function updateLocaleFields($user)
+	{
 		$this->updateDataObjectSettings('user_settings', $user, [
 			'user_id' => (int) $user->getId(),
 			// assoc_type and assoc_id must be included for upsert, or PostgreSQL's ON CONFLICT will not work:
@@ -358,7 +389,8 @@ class UserDAO extends DAO {
 	 * Update an existing user.
 	 * @param $user User
 	 */
-	function updateObject($user) {
+	function updateObject($user)
+	{
 		if ($user->getDateLastLogin() == null) {
 			$user->setDateLastLogin(Core::getCurrentDate());
 		}
@@ -387,7 +419,10 @@ class UserDAO extends DAO {
 					inline_help = ?,
 					gossip = ?
 				WHERE	user_id = ?',
-				$this->datetimeToDB($user->getDateLastEmail()), $this->datetimeToDB($user->getDateValidated()), $this->datetimeToDB($user->getDateLastLogin())),
+				$this->datetimeToDB($user->getDateLastEmail()),
+				$this->datetimeToDB($user->getDateValidated()),
+				$this->datetimeToDB($user->getDateLastLogin())
+			),
 			[
 				$user->getUsername(),
 				$user->getPassword(),
@@ -401,7 +436,7 @@ class UserDAO extends DAO {
 				$user->getMustChangePassword() ? 1 : 0,
 				$user->getDisabled() ? 1 : 0,
 				$user->getDisabledReason(),
-				$user->getAuthId()=='' ? null : (int) $user->getAuthId(),
+				$user->getAuthId() == '' ? null : (int) $user->getAuthId(),
 				$user->getAuthStr(),
 				(int) $user->getInlineHelp(),
 				$user->getGossip(),
@@ -414,7 +449,8 @@ class UserDAO extends DAO {
 	 * Delete a user.
 	 * @param $user User
 	 */
-	function deleteObject($user) {
+	function deleteObject($user)
+	{
 		$this->deleteUserById($user->getId());
 	}
 
@@ -422,7 +458,8 @@ class UserDAO extends DAO {
 	 * Delete a user by ID.
 	 * @param $userId int
 	 */
-	function deleteUserById($userId) {
+	function deleteUserById($userId)
+	{
 		$this->update('DELETE FROM user_settings WHERE user_id = ?', [(int) $userId]);
 		$this->update('DELETE FROM users WHERE user_id = ?', [(int) $userId]);
 	}
@@ -433,9 +470,10 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return string|null
 	 */
-	function getUserFullName($userId, $allowDisabled = true) {
+	function getUserFullName($userId, $allowDisabled = true)
+	{
 		$user = $this->getById($userId, $allowDisabled);
-		return $user?$user->getFullName():null;
+		return $user ? $user->getFullName() : null;
 	}
 
 	/**
@@ -444,13 +482,14 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return string
 	 */
-	function getUserEmail($userId, $allowDisabled = true) {
+	function getUserEmail($userId, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT email FROM users WHERE user_id = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT email FROM users WHERE user_id = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[(int) $userId]
 		);
 		$row = $result->current();
-		return $row?$row->email:null;
+		return $row ? $row->email : null;
 	}
 
 	/**
@@ -459,7 +498,8 @@ class UserDAO extends DAO {
 	 * @param $dbResultRange object The desired range of results to return
 	 * @return DAOResultFactory
 	 */
-	function getUsersWithNoRole($allowDisabled = true, $dbResultRange = null) {
+	function getUsersWithNoRole($allowDisabled = true, $dbResultRange = null)
+	{
 		$sql = 'SELECT u.*,
 			' . $this->getFetchColumns() . '
 			FROM users u
@@ -469,7 +509,7 @@ class UserDAO extends DAO {
 
 		$orderSql = $this->getOrderBy(); // FIXME Add "sort field" parameter?
 		$params = $this->getFetchParameters();
-		$result = $this->retrieveRange($sql . ($allowDisabled?'':' AND u.disabled = 0') . $orderSql, $params, $dbResultRange);
+		$result = $this->retrieveRange($sql . ($allowDisabled ? '' : ' AND u.disabled = 0') . $orderSql, $params, $dbResultRange);
 
 		return new DAOResultFactory($result, $this, '_returnUserFromRowWithData');
 	}
@@ -480,9 +520,10 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return boolean
 	 */
-	function userExistsById($userId, $allowDisabled = true) {
+	function userExistsById($userId, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT COUNT(*) AS row_count FROM users WHERE user_id = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT COUNT(*) AS row_count FROM users WHERE user_id = ?' . ($allowDisabled ? '' : ' AND disabled = 0'),
 			[(int) $userId]
 		);
 		$row = $result->current();
@@ -496,9 +537,10 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return boolean
 	 */
-	function userExistsByUsername($username, $userId = null, $allowDisabled = true) {
+	function userExistsByUsername($username, $userId = null, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT COUNT(*) AS row_count FROM users WHERE username = ?' . (isset($userId) ? ' AND user_id != ?' : '') . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT COUNT(*) AS row_count FROM users WHERE username = ?' . (isset($userId) ? ' AND user_id != ?' : '') . ($allowDisabled ? '' : ' AND disabled = 0'),
 			isset($userId) ? [$username, (int) $userId] : [$username]
 		);
 		$row = $result->current();
@@ -512,9 +554,10 @@ class UserDAO extends DAO {
 	 * @param $allowDisabled boolean
 	 * @return boolean
 	 */
-	function userExistsByEmail($email, $userId = null, $allowDisabled = true) {
+	function userExistsByEmail($email, $userId = null, $allowDisabled = true)
+	{
 		$result = $this->retrieve(
-			'SELECT COUNT(*) AS row_count FROM users WHERE email = ?' . (isset($userId) ? ' AND user_id != ?' : '') . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT COUNT(*) AS row_count FROM users WHERE email = ?' . (isset($userId) ? ' AND user_id != ?' : '') . ($allowDisabled ? '' : ' AND disabled = 0'),
 			isset($userId) ? [$email, (int) $userId] : [$email]
 		);
 		$row = $result->current();
@@ -526,7 +569,8 @@ class UserDAO extends DAO {
 	 * @param $oldLocale string
 	 * @param $newLocale string
 	 */
-	function changeSitePrimaryLocale($oldLocale, $newLocale) {
+	function changeSitePrimaryLocale($oldLocale, $newLocale)
+	{
 		// remove all empty user names in the new locale
 		// so that we do not have to take care if we should insert or update them -- we can then only insert them if needed
 		$settingNames = [IDENTITY_SETTING_GIVENNAME, IDENTITY_SETTING_FAMILYNAME, 'preferredPublicName'];
@@ -568,7 +612,7 @@ class UserDAO extends DAO {
 					FROM user_settings us
 					WHERE us.setting_name = ? AND us.locale = ? AND us.user_id = ?",
 					[$newLocale, IDENTITY_SETTING_GIVENNAME, IDENTITY_SETTING_GIVENNAME, $oldLocale, $userId]
-				 );
+				);
 			}
 		}
 	}
@@ -577,7 +621,8 @@ class UserDAO extends DAO {
 	 * Get the ID of the last inserted user.
 	 * @return int
 	 */
-	function getInsertId() {
+	function getInsertId()
+	{
 		return $this->_getInsertId('users', 'user_id');
 	}
 
@@ -585,17 +630,22 @@ class UserDAO extends DAO {
 	 * Return a list of extra parameters to bind to the user fetch queries.
 	 * @return array
 	 */
-	function getFetchParameters() {
+	function getFetchParameters()
+	{
 		$locale = AppLocale::getLocale();
 		// the users register for the site, thus
 		// the site primary locale should be the default locale
 		$site = Application::get()->getRequest()->getSite();
 		$primaryLocale = $site->getPrimaryLocale();
 		return [
-			IDENTITY_SETTING_GIVENNAME, $locale,
-			IDENTITY_SETTING_GIVENNAME, $primaryLocale,
-			IDENTITY_SETTING_FAMILYNAME, $locale,
-			IDENTITY_SETTING_FAMILYNAME, $primaryLocale,
+			IDENTITY_SETTING_GIVENNAME,
+			$locale,
+			IDENTITY_SETTING_GIVENNAME,
+			$primaryLocale,
+			IDENTITY_SETTING_FAMILYNAME,
+			$locale,
+			IDENTITY_SETTING_FAMILYNAME,
+			$primaryLocale,
 		];
 	}
 
@@ -603,7 +653,8 @@ class UserDAO extends DAO {
 	 * Return a SQL snippet of extra columns to fetch during user fetch queries.
 	 * @return string
 	 */
-	function getFetchColumns() {
+	function getFetchColumns()
+	{
 		return 'COALESCE(ugl.setting_value, ugpl.setting_value) AS user_given,
 			CASE WHEN ugl.setting_value <> \'\' THEN ufl.setting_value ELSE ufpl.setting_value END AS user_family';
 	}
@@ -612,7 +663,8 @@ class UserDAO extends DAO {
 	 * Return a SQL snippet of extra joins to include during user fetch queries.
 	 * @return string
 	 */
-	function getFetchJoins() {
+	function getFetchJoins()
+	{
 		return 'LEFT JOIN user_settings ugl ON (u.user_id = ugl.user_id AND ugl.setting_name = ? AND ugl.locale = ?)
 			LEFT JOIN user_settings ugpl ON (u.user_id = ugpl.user_id AND ugpl.setting_name = ? AND ugpl.locale = ?)
 			LEFT JOIN user_settings ufl ON (u.user_id = ufl.user_id AND ufl.setting_name = ? AND ufl.locale = ?)
@@ -623,8 +675,43 @@ class UserDAO extends DAO {
 	 * Return a default sorting.
 	 * @return string
 	 */
-	function getOrderBy() {
+	function getOrderBy()
+	{
 		return 'ORDER BY user_family, user_given';
 	}
+
+	/**
+	 * Return a list of users
+	 * @return array 
+	 */
+	function getAllUsers()
+	{
+		$result = $this->retrieve('SELECT * FROM users  WHERE user_id != 1');
+
+		$users = array();
+
+		foreach ($result as $row) {
+			$users[] = $row;
+		}
+
+		return $users;
+	}
+
+	function getAllUserSettings()
+	{
+		$result = $this->retrieve('SELECT * FROM user_settings WHERE user_id != 1');
+
+		$userSettings = array();
+
+		foreach ($result as $row) {
+			$userSettings[] = $row;
+		}
+
+		return $userSettings;
+	}
+
+
+
+
 }
 

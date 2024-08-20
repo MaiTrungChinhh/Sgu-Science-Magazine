@@ -15,26 +15,28 @@
  */
 
 /** types for all default navigationMenuItems */
-define('NMI_TYPE_ABOUT',	'NMI_TYPE_ABOUT');
-define('NMI_TYPE_SUBMISSIONS',	'NMI_TYPE_SUBMISSIONS');
-define('NMI_TYPE_EDITORIAL_TEAM',	'NMI_TYPE_EDITORIAL_TEAM');
-define('NMI_TYPE_EDITORIAL_BOARD',	'NMI_TYPE_EDITORIAL_BOARD');
-define('NMI_TYPE_CONTACT',	'NMI_TYPE_CONTACT');
-define('NMI_TYPE_ANNOUNCEMENTS',	'NMI_TYPE_ANNOUNCEMENTS');
-define('NMI_TYPE_CUSTOM',	'NMI_TYPE_CUSTOM');
-define('NMI_TYPE_REMOTE_URL',	'NMI_TYPE_REMOTE_URL');
+define('NMI_TYPE_ABOUT', 'NMI_TYPE_ABOUT');
+define('NMI_TYPE_SUBMISSIONS', 'NMI_TYPE_SUBMISSIONS');
+define('NMI_TYPE_EDITORIAL_TEAM', 'NMI_TYPE_EDITORIAL_TEAM');
+define('NMI_TYPE_EDITORIAL_BOARD', 'NMI_TYPE_EDITORIAL_BOARD');
+define('NMI_TYPE_EDITORIAL_BOARD_EDIT', 'NMI_TYPE_EDITORIAL_BOARD_EDIT');
+define('NMI_TYPE_CONTACT', 'NMI_TYPE_CONTACT');
+define('NMI_TYPE_ANNOUNCEMENTS', 'NMI_TYPE_ANNOUNCEMENTS');
+define('NMI_TYPE_CUSTOM', 'NMI_TYPE_CUSTOM');
+define('NMI_TYPE_REMOTE_URL', 'NMI_TYPE_REMOTE_URL');
 
-define('NMI_TYPE_USER_LOGOUT',	'NMI_TYPE_USER_LOGOUT');
-define('NMI_TYPE_USER_LOGOUT_AS',	'NMI_TYPE_USER_LOGOUT_AS');
-define('NMI_TYPE_USER_PROFILE',	'NMI_TYPE_USER_PROFILE');
-define('NMI_TYPE_ADMINISTRATION',	'NMI_TYPE_ADMINISTRATION');
-define('NMI_TYPE_USER_DASHBOARD',	'NMI_TYPE_USER_DASHBOARD');
-define('NMI_TYPE_USER_REGISTER',	'NMI_TYPE_USER_REGISTER');
-define('NMI_TYPE_USER_LOGIN',	'NMI_TYPE_USER_LOGIN');
-define('NMI_TYPE_SEARCH',	'NMI_TYPE_SEARCH');
-define('NMI_TYPE_PRIVACY',	'NMI_TYPE_PRIVACY');
+define('NMI_TYPE_USER_LOGOUT', 'NMI_TYPE_USER_LOGOUT');
+define('NMI_TYPE_USER_LOGOUT_AS', 'NMI_TYPE_USER_LOGOUT_AS');
+define('NMI_TYPE_USER_PROFILE', 'NMI_TYPE_USER_PROFILE');
+define('NMI_TYPE_ADMINISTRATION', 'NMI_TYPE_ADMINISTRATION');
+define('NMI_TYPE_USER_DASHBOARD', 'NMI_TYPE_USER_DASHBOARD');
+define('NMI_TYPE_USER_REGISTER', 'NMI_TYPE_USER_REGISTER');
+define('NMI_TYPE_USER_LOGIN', 'NMI_TYPE_USER_LOGIN');
+define('NMI_TYPE_SEARCH', 'NMI_TYPE_SEARCH');
+define('NMI_TYPE_PRIVACY', 'NMI_TYPE_PRIVACY');
 
-class NavigationMenuItem extends DataObject {
+class NavigationMenuItem extends DataObject
+{
 	/** @var $navigationMenuItems array The navigationMenuItems underneath this navigationMenuItem */
 	var $navigationMenuItems = array();
 
@@ -49,7 +51,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set path for this navigation menu item.
 	 * @param $path string
 	 */
-	function setPath($path) {
+	function setPath($path)
+	{
 		$this->setData('path', $path);
 	}
 
@@ -57,7 +60,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get path for this navigation menu item.
 	 * @return string
 	 */
-	function getPath() {
+	function getPath()
+	{
 		return $this->getData('path');
 	}
 
@@ -65,7 +69,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set url for this navigation menu item.
 	 * @param $url string
 	 */
-	function setUrl($url) {
+	function setUrl($url)
+	{
 		$this->setData('url', $url);
 	}
 
@@ -73,7 +78,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get url for this navigation menu item.
 	 * @return string
 	 */
-	function getUrl() {
+	function getUrl()
+	{
 		return $this->getData('url');
 	}
 
@@ -81,7 +87,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set type for this navigation menu item.
 	 * @param $type string
 	 */
-	function setType($type) {
+	function setType($type)
+	{
 		$this->setData('type', $type);
 	}
 
@@ -89,7 +96,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get type for this navigation menu item.
 	 * @return string
 	 */
-	function getType() {
+	function getType()
+	{
 		return $this->getData('type');
 	}
 
@@ -97,7 +105,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get contextId for this navigation menu item.
 	 * @return int
 	 */
-	function getContextId() {
+	function getContextId()
+	{
 		return $this->getData('contextId');
 	}
 
@@ -105,7 +114,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set context_id for this navigation menu item.
 	 * @param $contextId int
 	 */
-	function setContextId($contextId) {
+	function setContextId($contextId)
+	{
 		$this->setData('contextId', $contextId);
 	}
 
@@ -113,7 +123,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get the title of the navigation Menu.
 	 * @return string
 	 */
-	function getLocalizedTitle() {
+	function getLocalizedTitle()
+	{
 		return $this->getLocalizedData('title');
 	}
 
@@ -122,7 +133,8 @@ class NavigationMenuItem extends DataObject {
 	 * @param $locale string
 	 * @return string
 	 */
-	function getTitle($locale) {
+	function getTitle($locale)
+	{
 		return $this->getData('title', $locale);
 	}
 
@@ -131,7 +143,8 @@ class NavigationMenuItem extends DataObject {
 	 * @param $title string
 	 * @param $locale string
 	 */
-	function setTitle($title, $locale) {
+	function setTitle($title, $locale)
+	{
 		$this->setData('title', $title, $locale);
 	}
 
@@ -139,7 +152,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get the content of the navigation Menu.
 	 * @return string
 	 */
-	function getLocalizedContent() {
+	function getLocalizedContent()
+	{
 		return $this->getLocalizedData('content');
 	}
 
@@ -148,7 +162,8 @@ class NavigationMenuItem extends DataObject {
 	 * @param $locale string
 	 * @return string
 	 */
-	function getContent($locale) {
+	function getContent($locale)
+	{
 		return $this->getData('content', $locale);
 	}
 
@@ -157,7 +172,8 @@ class NavigationMenuItem extends DataObject {
 	 * @param $content string
 	 * @param $locale string
 	 */
-	function setContent($content, $locale) {
+	function setContent($content, $locale)
+	{
 		$this->setData('content', $content, $locale);
 	}
 
@@ -165,7 +181,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get seq for this navigation menu item.
 	 * @return int
 	 */
-	function getSequence() {
+	function getSequence()
+	{
 		return $this->getData('seq');
 	}
 
@@ -173,7 +190,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set seq for this navigation menu item.
 	 * @param $seq int
 	 */
-	function setSequence($seq) {
+	function setSequence($seq)
+	{
 		$this->setData('seq', $seq);
 	}
 
@@ -181,7 +199,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get $isDisplayed for this navigation menu item.
 	 * @return boolean
 	 */
-	function getIsDisplayed() {
+	function getIsDisplayed()
+	{
 		return $this->_isDisplayed;
 	}
 
@@ -189,7 +208,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set $isDisplayed for this navigation menu item.
 	 * @param $isDisplayed boolean
 	 */
-	function setIsDisplayed($isDisplayed) {
+	function setIsDisplayed($isDisplayed)
+	{
 		$this->_isDisplayed = $isDisplayed;
 	}
 
@@ -197,7 +217,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get $isChildVisible for this navigation menu item.
 	 * @return boolean true if at least one NMI child is visible. It is defined at the Service functionality level
 	 */
-	function getIsChildVisible() {
+	function getIsChildVisible()
+	{
 		return $this->_isChildVisible;
 	}
 
@@ -205,7 +226,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set $isChildVisible for this navigation menu item.
 	 * @param $isChildVisible boolean true if at least one NMI child is visible. It is defined at the Service functionality level
 	 */
-	function setIsChildVisible($isChildVisible) {
+	function setIsChildVisible($isChildVisible)
+	{
 		$this->_isChildVisible = $isChildVisible;
 	}
 
@@ -213,7 +235,8 @@ class NavigationMenuItem extends DataObject {
 	 * Get the titleLocaleKey of the navigation Menu.
 	 * @return string
 	 */
-	function getTitleLocaleKey() {
+	function getTitleLocaleKey()
+	{
 		return $this->getData('titleLocaleKey');
 	}
 
@@ -221,7 +244,8 @@ class NavigationMenuItem extends DataObject {
 	 * Set titleLocaleKey for this navigation menu item.
 	 * @param $titleLocaleKey string
 	 */
-	function setTitleLocaleKey($titleLocaleKey) {
+	function setTitleLocaleKey($titleLocaleKey)
+	{
 		return $this->setData('titleLocaleKey', $titleLocaleKey);
 	}
 
@@ -229,24 +253,27 @@ class NavigationMenuItem extends DataObject {
 	 * Get the remoteUrl of the navigation Menu.
 	 * @return string
 	 */
-	function getLocalizedRemoteUrl() {
+	function getLocalizedRemoteUrl()
+	{
 		return $this->getLocalizedData('remoteUrl');
 	}
-	
+
 	/**
 	 * Get the remoteUrl of the navigation menu item.
 	 * @param $locale string
 	 */
-	function getRemoteUrl($locale) {
+	function getRemoteUrl($locale)
+	{
 		return $this->getData('remoteUrl', $locale);
 	}
-	
+
 	/**
 	 * Set the remoteUrl of the navigation menu item.
 	 * @param $url string
 	 * @param $locale string
 	 */
-	function setRemoteUrl($url, $locale) {
+	function setRemoteUrl($url, $locale)
+	{
 		$this->setData('remoteUrl', $url, $locale);
 	}
 }

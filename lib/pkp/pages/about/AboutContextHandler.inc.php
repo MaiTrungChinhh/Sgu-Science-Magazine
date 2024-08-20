@@ -68,11 +68,21 @@ class AboutContextHandler extends Handler
 
 	function editorialBoard($args, $request)
 	{
+		$userDao = new UserDAO();
+		$users = $userDao->getAllUsers();
+		$UserSettings = $userDao->getAllUserSettings();
 		$templateMgr = TemplateManager::getManager($request);
 		$this->setupTemplate($request);
+		$templateMgr->assign('users', $users);
+		$templateMgr->assign('userSettings', $UserSettings);
 		$templateMgr->display('frontend/pages/editorialBoard.tpl');
 	}
-
+	function editorialBoardEdit($args, $request)
+	{
+		$templateMgr = TemplateManager::getManager($request);
+		$this->setupTemplate($request);
+		$templateMgr->display('frontend/pages/editorialBoardEdit.tpl');
+	}
 
 	/**
 	 * Display submissions page.
@@ -124,14 +134,14 @@ class AboutContextHandler extends Handler
 		$this->setupTemplate($request);
 		$context = $request->getContext();
 		$templateMgr->assign(array(
-			'mailingAddress'     => $context->getData('mailingAddress'),
-			'contactPhone'       => $context->getData('contactPhone'),
-			'contactEmail'       => $context->getData('contactEmail'),
-			'contactName'        => $context->getData('contactName'),
-			'supportName'        => $context->getData('supportName'),
-			'supportPhone'       => $context->getData('supportPhone'),
-			'supportEmail'       => $context->getData('supportEmail'),
-			'contactTitle'       => $context->getLocalizedData('contactTitle'),
+			'mailingAddress' => $context->getData('mailingAddress'),
+			'contactPhone' => $context->getData('contactPhone'),
+			'contactEmail' => $context->getData('contactEmail'),
+			'contactName' => $context->getData('contactName'),
+			'supportName' => $context->getData('supportName'),
+			'supportPhone' => $context->getData('supportPhone'),
+			'supportEmail' => $context->getData('supportEmail'),
+			'contactTitle' => $context->getLocalizedData('contactTitle'),
 			'contactAffiliation' => $context->getLocalizedData('contactAffiliation'),
 		));
 		$templateMgr->display('frontend/pages/contact.tpl');
